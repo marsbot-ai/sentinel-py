@@ -1,0 +1,5 @@
+# Core dependencies
+psutil>=5.9.0
+
+# Optional dependencies
+# These are kept minimal to avoid bloat
