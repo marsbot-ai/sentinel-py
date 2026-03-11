@@ -3,11 +3,9 @@
 [![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
-**⚠️ This is a CLIENT library, NOT a server implementation.**
+**Pure Python implementation** of flow control, circuit breaking and system protection patterns, inspired by [Alibaba Sentinel](https://github.com/alibaba/Sentinel).
 
-Python version of [Alibaba Sentinel](https://github.com/alibaba/Sentinel) - A powerful flow control, circuit breaking and system protection library for microservices.
-
-> **Note:** This library allows your Python applications to protect resources with flow control, circuit breaking, and system protection. This is inspired by the official Java implementation.
+> **Note:** This is a **standalone library** written entirely in Python. It does NOT depend on or require the Java-based Alibaba Sentinel. All protection rules run locally within your Python application.
 
 ## Features
 
@@ -19,12 +17,12 @@ Python version of [Alibaba Sentinel](https://github.com/alibaba/Sentinel) - A po
 
 ## Getting Started
 
-### Do I Need a Server?
+### Do I Need to Install Alibaba Sentinel?
 
-**No.** Sentinel-Py is a **standalone client library** that works entirely within your Python application. All protection rules are evaluated locally - no external server required.
+**No.** Sentinel-Py is a **pure Python implementation** that works independently. It does not require Alibaba's Java-based Sentinel.
 
 ```python
-# This works out of the box - no server needed!
+# This works out of the box - no Java, no server needed!
 from sentinel import Sentinel
 from sentinel.flow import FlowRule
 
@@ -32,26 +30,16 @@ rule = FlowRule(resource="api", qps=100)
 Sentinel.load_flow_rules([rule])
 ```
 
-### Optional: Sentinel Dashboard
+### Architecture
 
-For visual monitoring and dynamic rule management, you can optionally deploy the **Sentinel Dashboard** (Java-based):
+Sentinel-Py implements core Sentinel patterns directly in Python:
 
-**Start Dashboard with Docker:**
-```bash
-docker run --name sentinel-dashboard \
-  -p 8858:8858 \
-  bladex/sentinel-dashboard:latest
-```
+- **Token Bucket** for rate limiting
+- **Sliding Window** for statistics
+- **State Machine** for circuit breaking
+- **System Metrics** via `psutil`
 
-**Or download and run:**
-```bash
-wget https://github.com/alibaba/Sentinel/releases/download/1.8.6/sentinel-dashboard-1.8.6.jar
-java -jar sentinel-dashboard-1.8.6.jar --server.port=8858
-```
-
-**Access Dashboard:** http://localhost:8858 (login: `sentinel` / `sentinel`)
-
-> **Note:** The dashboard is completely optional. All core protection features work without it.
+All processing happens locally in your Python process - no network calls, no external dependencies.
 
 ## Installation
 
@@ -191,6 +179,6 @@ Apache License 2.0 - see [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-This project is inspired by the official [Alibaba Sentinel](https://github.com/alibaba/Sentinel).
+This project is a **Python reimplementation** inspired by the concepts and design of [Alibaba Sentinel](https://github.com/alibaba/Sentinel).
 
-This is a **client-only** library implementing Sentinel concepts in Python.
+While it follows similar patterns and API design, it is written entirely in Python and does not share code with the Java implementation.
