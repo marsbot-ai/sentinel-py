@@ -1,8 +1,8 @@
 """
 Flow control module for Sentinel.
 """
-from .rule import FlowRule, FlowRuleManager
-from .strategy import ControlBehavior, TrafficShapingStrategy
+from .rule import FlowRule, FlowRuleManager, ControlBehavior
+from .strategy import TrafficShapingStrategy
 
 __all__ = [
     "FlowRule",

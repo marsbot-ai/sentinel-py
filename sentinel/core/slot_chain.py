@@ -5,10 +5,6 @@ from typing import List, Optional
 from .resource import ResourceWrapper
 from .context import Context
 from .exceptions import SentinelException, BlockException
-from ..flow.slot import FlowSlot
-from ..circuit.slot import CircuitBreakerSlot
-from ..system.slot import SystemSlot
-from ..stat.slot import StatisticSlot
 
 
 class ProcessorSlot:
@@ -32,6 +28,12 @@ class SlotChain:
     """
     
     def __init__(self):
+        # Delayed imports to avoid circular import
+        from ..flow.slot import FlowSlot
+        from ..circuit.slot import CircuitBreakerSlot
+        from ..system.slot import SystemSlot
+        from ..stat.slot import StatisticSlot
+        
         self._slots: List[ProcessorSlot] = [
             StatisticSlot(),      # Statistics first
             SystemSlot(),         # System protection

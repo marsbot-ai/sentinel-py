@@ -17,6 +17,42 @@ Python version of [Alibaba Sentinel](https://github.com/alibaba/Sentinel) - A po
 - **Real-time Statistics**: Monitor resource metrics in real-time
 - **Flexible Rules**: Easy-to-configure rules with various strategies
 
+## Getting Started
+
+### Do I Need a Server?
+
+**No.** Sentinel-Py is a **standalone client library** that works entirely within your Python application. All protection rules are evaluated locally - no external server required.
+
+```python
+# This works out of the box - no server needed!
+from sentinel import Sentinel
+from sentinel.flow import FlowRule
+
+rule = FlowRule(resource="api", qps=100)
+Sentinel.load_flow_rules([rule])
+```
+
+### Optional: Sentinel Dashboard
+
+For visual monitoring and dynamic rule management, you can optionally deploy the **Sentinel Dashboard** (Java-based):
+
+**Start Dashboard with Docker:**
+```bash
+docker run --name sentinel-dashboard \
+  -p 8858:8858 \
+  bladex/sentinel-dashboard:latest
+```
+
+**Or download and run:**
+```bash
+wget https://github.com/alibaba/Sentinel/releases/download/1.8.6/sentinel-dashboard-1.8.6.jar
+java -jar sentinel-dashboard-1.8.6.jar --server.port=8858
+```
+
+**Access Dashboard:** http://localhost:8858 (login: `sentinel` / `sentinel`)
+
+> **Note:** The dashboard is completely optional. All core protection features work without it.
+
 ## Installation
 
 ```bash
